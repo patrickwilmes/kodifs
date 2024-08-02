@@ -5,4 +5,4 @@ rootProject.name = "kodifs"
 include(":client")
 include(":data-node")
 include(":main-node")
-
+include(":commons")

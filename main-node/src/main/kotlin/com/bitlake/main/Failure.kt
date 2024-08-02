@@ -6,6 +6,6 @@
 */
 package com.bitlake.main
 
-fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
+sealed interface Failure {
+    data class IOFailure(val throwable: Throwable): Failure
 }
