@@ -1,3 +1,4 @@
+
 plugins {
     kotlin("jvm") version "2.0.0"
     id(Plugins.KtorPlugin) version Plugins.KtorPluginVersion
@@ -21,8 +22,6 @@ repositories {
 dependencies {
     applyArrowStack()
     applyKoin()
-    implementation(project(":commons"))
-    implementation(Dependencies.Quartz)
     implementation(Dependencies.KtorContentNegotiation)
     implementation(Dependencies.KtorCore)
     implementation(Dependencies.KtorKotlinxJson)

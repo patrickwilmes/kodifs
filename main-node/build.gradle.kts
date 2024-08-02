@@ -19,6 +19,11 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":commons"))
+    applyArrowStack()
+    applyDatabaseSupport()
+    applyKoin()
+    implementation(Dependencies.Quartz)
     implementation(Dependencies.KtorContentNegotiation)
     implementation(Dependencies.KtorCore)
     implementation(Dependencies.KtorKotlinxJson)
@@ -27,6 +32,7 @@ dependencies {
     implementation(Dependencies.LogBack)
     implementation(Dependencies.KtorServerConfig)
     implementation(Dependencies.Coroutines)
+    implementation(Dependencies.PulsarClient)
     testImplementation(kotlin("test"))
 }
 
