@@ -8,8 +8,10 @@ package com.bitlake.main
 
 import com.bitlake.commons.GlobalKoinContext
 import com.bitlake.commons.runServer
-import com.bitlake.main.heartbeat.heartbeatModule
-import com.bitlake.main.heartbeat.setupHeartbeat
+import com.bitlake.main.metrics.ConnectionMonitor
+import com.bitlake.main.metrics.heartbeatModule
+import com.bitlake.main.metrics.setupHeartbeat
+import io.ktor.server.application.ApplicationCallPipeline
 import io.ktor.server.application.install
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
@@ -25,6 +27,14 @@ fun main() {
                 module { single { application } } // we need a reference of the ktor app in background jobs
             )
             GlobalKoinContext.koin = koin
+        }
+        intercept(ApplicationCallPipeline.Monitoring) {
+            ConnectionMonitor.incrementConnectionCount()
+            try {
+                proceed()
+            } finally {
+                ConnectionMonitor.decrementConnectionCount()
+            }
         }
         setupHeartbeat()
     }

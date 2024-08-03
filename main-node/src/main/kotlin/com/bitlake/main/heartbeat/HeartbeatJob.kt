@@ -6,9 +6,7 @@
 */
 package com.bitlake.main.heartbeat
 
-import com.bitlake.commons.ConfigurationValue
 import com.bitlake.commons.GlobalKoinContext
-import com.bitlake.commons.intConfigValue
 import io.ktor.server.application.Application
 import org.koin.dsl.module
 import org.quartz.Job
@@ -35,7 +33,7 @@ fun Application.setupHeartbeatJob() {
         .startNow()
         .withSchedule(
             simpleSchedule()
-                .withIntervalInSeconds(60)
+                .withIntervalInSeconds(60) // todo - make this configurable
                 .repeatForever()
         )
         .build()
