@@ -9,6 +9,7 @@ package com.bitlake.main.metrics
 import com.bitlake.commons.ConfigurationValue
 import com.bitlake.commons.GlobalKoinContext
 import com.bitlake.commons.HEARTBEAT_TOPIC
+import com.bitlake.commons.ServerPort
 import com.bitlake.commons.intConfigValue
 import com.bitlake.shared.Heartbeat
 import io.ktor.server.application.Application
@@ -53,7 +54,7 @@ class HeartbeatJob : Job {
         val ktorApp = GlobalKoinContext.koin().get<Application>()
         val hostInfo = with(ktorApp) {
             "localhost" to
-                environment.config.property("ktor.deployment.port").getString()
+                ServerPort.port
         }
         val producer = GlobalKoinContext.koin().get<PulsarClient>().newProducer()
             .topic(HEARTBEAT_TOPIC)
@@ -61,7 +62,7 @@ class HeartbeatJob : Job {
         val systemMetrics = gatherSystemMetrics()
         val heartbeat = Heartbeat(
             host = hostInfo.first,
-            port = hostInfo.second,
+            port = hostInfo.second.toString(),
             activeConnections = ConnectionMonitor.getConnectionCount(),
             cpuLoad = systemMetrics.cpuLoad,
             usedMemory = systemMetrics.usedMemory,

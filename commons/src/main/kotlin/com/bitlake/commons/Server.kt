@@ -8,6 +8,7 @@ package com.bitlake.commons
 
 import arrow.fx.coroutines.Resource
 import com.typesafe.config.ConfigFactory
+import io.ktor.server.application.ApplicationStarted
 import io.ktor.server.application.host
 import io.ktor.server.application.port
 import io.ktor.server.config.HoconApplicationConfig
@@ -40,7 +41,9 @@ fun <TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configurati
                     watchPaths = listOf("classes")
                 },
                 configure = configure,
-            ).apply { start() }
+            ).apply {
+                start()
+            }
         },
         { engine, _ ->
             if (!engine.environment.developmentMode) {
