@@ -12,4 +12,9 @@ import kotlinx.serialization.Serializable
 data class Heartbeat(
     val host: String,
     val port: String,
+    val activeConnections: Int,
+    val cpuLoad: Double,
+    val usedMemory: Long,
+    val totalMemory: Long,
+    val diskSpace: Long,
 )

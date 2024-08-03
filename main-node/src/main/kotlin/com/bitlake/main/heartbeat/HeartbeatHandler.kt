@@ -26,6 +26,11 @@ fun updateHeartbeat(heartbeat: Heartbeat): Either<Failure, Unit> {
             HeartbeatTable.upsert {
                 it[host] = heartbeat.host
                 it[port] = heartbeat.port
+                it[activeConnections] = heartbeat.activeConnections
+                it[cpuLoad] = heartbeat.cpuLoad
+                it[usedMemory] = heartbeat.usedMemory
+                it[totalMemory] = heartbeat.totalMemory
+                it[freeDiskSpace] = heartbeat.diskSpace
                 it[healthy] = true
                 it[lastHb] = Clock.System.now()
             }
@@ -61,6 +66,11 @@ private object HeartbeatTable : Table(name = "heartbeat") {
     val port = text("port")
     val lastHb = timestamp("last_hb")
     val healthy = bool("healthy")
+    val activeConnections = integer(name = "active_connections")
+    val cpuLoad = double(name = "cpu_load")
+    val usedMemory = long("used_memory")
+    val totalMemory = long("total_memory")
+    val freeDiskSpace = long(name = "free_disk_space")
 
     override val primaryKey = PrimaryKey(host, port)
 }

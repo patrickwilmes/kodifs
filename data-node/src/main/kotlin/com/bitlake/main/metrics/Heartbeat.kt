@@ -4,7 +4,7 @@
 *
 * SPDX-License-Identifier: BSD-2-Clause
 */
-package com.bitlake.main.heartbeat
+package com.bitlake.main.metrics
 
 import com.bitlake.commons.ConfigurationValue
 import com.bitlake.commons.GlobalKoinContext
@@ -12,7 +12,6 @@ import com.bitlake.commons.HEARTBEAT_TOPIC
 import com.bitlake.commons.intConfigValue
 import com.bitlake.shared.Heartbeat
 import io.ktor.server.application.Application
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.apache.pulsar.client.api.PulsarClient
@@ -59,7 +58,16 @@ class HeartbeatJob : Job {
         val producer = GlobalKoinContext.koin().get<PulsarClient>().newProducer()
             .topic(HEARTBEAT_TOPIC)
             .create()
-        val heartbeat = Heartbeat(hostInfo.first, hostInfo.second)
+        val systemMetrics = gatherSystemMetrics()
+        val heartbeat = Heartbeat(
+            host = hostInfo.first,
+            port = hostInfo.second,
+            activeConnections = ConnectionMonitor.getConnectionCount(),
+            cpuLoad = systemMetrics.cpuLoad,
+            usedMemory = systemMetrics.usedMemory,
+            totalMemory = systemMetrics.totalMemory,
+            diskSpace = systemMetrics.diskSpace,
+        )
         val jsonString = Json.encodeToString(heartbeat)
         producer.send(jsonString.toByteArray())
     }
