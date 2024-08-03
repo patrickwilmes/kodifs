@@ -13,9 +13,14 @@ import io.ktor.server.netty.Netty
 import kotlinx.coroutines.awaitCancellation
 import kotlin.time.Duration.Companion.seconds
 
+object ServerPort {
+    var port = 0
+}
+
 fun runServer(moduleRegistry: Application.() -> Unit): Unit = SuspendApp {
     resource {
         val engine = server(Netty, preWait = 1.seconds).bind()
+        ServerPort.port = engine.resolvedConnectors().first().port
         engine.application.moduleRegistry()
     }.use { awaitCancellation() }
 }
