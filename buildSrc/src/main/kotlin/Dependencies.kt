@@ -40,6 +40,15 @@ object Dependencies {
     const val flyway = "org.flywaydb:flyway-core:10.17.0"
     const val FlywayPostgres = "org.flywaydb:flyway-database-postgresql:10.17.0"
     const val Quartz = "org.quartz-scheduler:quartz:2.3.2"
+
+    // testing dependencies
+    const val AssertK = "com.willowtreeapps.assertk:assertk:0.28.1"
+    const val Mockk = "io.mockk:mockk:1.13.12"
+}
+
+fun DependencyHandler.applyTesting() {
+    add("testImplementation", Dependencies.AssertK)
+    add("testImplementation", Dependencies.Mockk)
 }
 
 fun DependencyHandler.applyDatabaseSupport() {

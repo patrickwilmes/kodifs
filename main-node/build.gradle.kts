@@ -33,6 +33,7 @@ dependencies {
     implementation(Dependencies.KtorServerConfig)
     implementation(Dependencies.Coroutines)
     implementation(Dependencies.PulsarClient)
+    applyTesting()
     testImplementation(kotlin("test"))
 }
 

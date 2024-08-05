@@ -61,7 +61,7 @@ fun healthCheck() {
     }
 }
 
-private object HeartbeatTable : Table(name = "heartbeat") {
+object HeartbeatTable : Table(name = "heartbeat") {
     val host = text("host")
     val port = text("port")
     val lastHb = timestamp("last_hb")

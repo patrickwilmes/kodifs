@@ -8,4 +8,5 @@ package com.bitlake.main
 
 sealed interface Failure {
     data class IOFailure(val throwable: Throwable): Failure
+    data class InvalidStateFailure(val message: String): Failure
 }
