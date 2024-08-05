@@ -41,6 +41,7 @@ interface LoadBalancer {
                                 usedMemory = it[HeartbeatTable.usedMemory],
                                 totalMemory = it[HeartbeatTable.totalMemory],
                                 freeDiskSpace = it[HeartbeatTable.freeDiskSpace],
+                                totalDiskSpace = it[HeartbeatTable.totalDiskSpace],
                             )
                         }.toSet()
                 }
@@ -70,9 +71,10 @@ class LeastConnectionLoadBalancer(
 class LeastLoadLoadBalancer(
     private val nodeSupplier: NodeSupplier,
 ) : LoadBalancer {
-    override fun getNode(): Either<Failure, Node> {
-
-        TODO("Not yet implemented")
+    override fun getNode(): Either<Failure, Node> = either {
+        val nodes = nodeSupplier.activeNodes().bind()
+        ensure(nodes.isNotEmpty()) { Failure.InvalidStateFailure("No active nodes found") }
+        nodes.minByOrNull { it.currentLoad }!!
     }
 }
 

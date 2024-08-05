@@ -14,4 +14,14 @@ data class Node(
     val usedMemory: Long,
     val totalMemory: Long,
     val freeDiskSpace: Long,
-)
+    val totalDiskSpace: Long,
+) {
+    init {
+        require(totalMemory > 0) { "Total memory must be greater than 0!" }
+        require(totalDiskSpace > 0) { "Total disk space must be greater than 0!" }
+    }
+
+    val currentLoad by lazy {
+        load + freeDiskSpace * 100 / totalDiskSpace + usedMemory * 100 / totalMemory
+    }
+}

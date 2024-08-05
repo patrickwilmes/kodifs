@@ -71,6 +71,7 @@ object HeartbeatTable : Table(name = "heartbeat") {
     val usedMemory = long("used_memory")
     val totalMemory = long("total_memory")
     val freeDiskSpace = long(name = "free_disk_space")
+    val totalDiskSpace = long(name = "total_disk_space")
 
     override val primaryKey = PrimaryKey(host, port)
 }

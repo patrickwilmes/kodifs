@@ -10,6 +10,7 @@ import arrow.core.right
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
+import com.bitlake.isLeft
 import com.bitlake.main.loadbalancing.LeastConnectionLoadBalancer
 import com.bitlake.main.loadbalancing.Node
 import org.junit.jupiter.api.Test
@@ -24,7 +25,7 @@ class LeastConnectionLoadBalancerTest {
 
         val node = loadBalancer.getNode()
 
-        assertThat(node.isLeft()).isTrue()
+        assertThat(node).isLeft()
     }
 
     @Test
