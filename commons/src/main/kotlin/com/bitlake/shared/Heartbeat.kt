@@ -17,4 +17,5 @@ data class Heartbeat(
     val usedMemory: Long,
     val totalMemory: Long,
     val diskSpace: Long,
+    // todo - add the total disk space
 )

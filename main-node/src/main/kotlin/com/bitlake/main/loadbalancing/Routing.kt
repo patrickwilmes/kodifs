@@ -30,6 +30,7 @@ fun Application.installLoadBalancingRoutes() {
             get {
                 either {
                     val responsibleNode = LoadBalancer
+                        // todo - make the load balancing strategy also configurable
                         .getLoadBalancer(LoadBalancingStrategy.LeastConnection)
                         .getNode()
                         .bind()
