@@ -15,6 +15,7 @@ data class SystemMetrics(
     val usedMemory: Long,
     val totalMemory: Long,
     val diskSpace: Long,
+    val totalDiskSpace: Long,
 )
 
 fun gatherSystemMetrics(): SystemMetrics {
@@ -25,5 +26,6 @@ fun gatherSystemMetrics(): SystemMetrics {
     val usedMemory = runtime.totalMemory() - runtime.freeMemory()
     val totalMemory = runtime.totalMemory()
     val freeSpace = File("/").freeSpace
-    return SystemMetrics(cpuLoad, usedMemory, totalMemory, freeSpace)
+    val totalDiskSpace = File("/").totalSpace
+    return SystemMetrics(cpuLoad, usedMemory, totalMemory, freeSpace, totalDiskSpace)
 }

@@ -68,6 +68,7 @@ class HeartbeatJob : Job {
             usedMemory = systemMetrics.usedMemory,
             totalMemory = systemMetrics.totalMemory,
             diskSpace = systemMetrics.diskSpace,
+            totalDiskSpace = systemMetrics.totalDiskSpace,
         )
         val jsonString = Json.encodeToString(heartbeat)
         producer.send(jsonString.toByteArray())

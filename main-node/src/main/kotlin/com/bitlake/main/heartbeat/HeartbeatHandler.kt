@@ -31,6 +31,7 @@ fun updateHeartbeat(heartbeat: Heartbeat): Either<Failure, Unit> {
                 it[usedMemory] = heartbeat.usedMemory
                 it[totalMemory] = heartbeat.totalMemory
                 it[freeDiskSpace] = heartbeat.diskSpace
+                it[totalDiskSpace] = heartbeat.totalDiskSpace
                 it[healthy] = true
                 it[lastHb] = Clock.System.now()
             }
