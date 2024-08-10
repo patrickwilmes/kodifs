@@ -19,7 +19,7 @@ fun interface NodeSupplier {
 }
 
 enum class LoadBalancingStrategy {
-    LeastConnection, LeastLoad, LeastConnectionAndLoad
+    LeastConnection, LeastLoad,
 }
 
 interface LoadBalancer {
@@ -51,9 +51,6 @@ interface LoadBalancer {
         fun getLoadBalancer(strategy: LoadBalancingStrategy): LoadBalancer = when (strategy) {
             LoadBalancingStrategy.LeastConnection -> LeastConnectionLoadBalancer(nodeSupplier)
             LoadBalancingStrategy.LeastLoad -> LeastLoadLoadBalancer(nodeSupplier)
-            LoadBalancingStrategy.LeastConnectionAndLoad -> LeastConnectionAndLoadLoadBalancer(
-                nodeSupplier
-            )
         }
     }
 }
@@ -75,13 +72,5 @@ class LeastLoadLoadBalancer(
         val nodes = nodeSupplier.activeNodes().bind()
         ensure(nodes.isNotEmpty()) { Failure.InvalidStateFailure("No active nodes found") }
         nodes.minByOrNull { it.currentLoad }!!
-    }
-}
-
-class LeastConnectionAndLoadLoadBalancer(
-    private val nodeSupplier: NodeSupplier,
-) : LoadBalancer {
-    override fun getNode(): Either<Failure, Node> {
-        TODO("Not yet implemented")
     }
 }
