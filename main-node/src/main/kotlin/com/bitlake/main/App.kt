@@ -8,7 +8,6 @@ package com.bitlake.main
 
 import com.bitlake.commons.ConfigurationValue
 import com.bitlake.commons.GlobalKoinContext
-import com.bitlake.commons.HEARTBEAT_TOPIC
 import com.bitlake.commons.Value
 import com.bitlake.commons.booleanConfigValue
 import com.bitlake.commons.configValue
@@ -19,6 +18,7 @@ import com.bitlake.main.consumer.Consumer
 import com.bitlake.main.consumer.HeartbeatConsumer
 import com.bitlake.main.heartbeat.heartbeatModule
 import com.bitlake.main.heartbeat.setupHeartbeatJob
+import com.bitlake.main.loadbalancing.installLoadBalancingRoutes
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.call
@@ -31,10 +31,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 import java.util.UUID
-import kotlin.reflect.full.createInstance
 
 @OptIn(DelicateCoroutinesApi::class)
 private fun Application.createConsumerForTopic(consumer: Consumer): Job = GlobalScope.launch(Dispatchers.IO) {
@@ -86,9 +84,5 @@ fun main() {
 }
 
 private fun Application.installRoutes() {
-    routing {
-        get("/hello") {
-            call.respond("Hello World!")
-        }
-    }
+    installLoadBalancingRoutes()
 }

@@ -36,12 +36,12 @@ interface LoadBalancer {
                             Node(
                                 host = it[HeartbeatTable.host],
                                 port = it[HeartbeatTable.port].toInt(),
-                                activeConnections = it[HeartbeatTable.activeConnections],
-                                load = it[HeartbeatTable.cpuLoad],
-                                usedMemory = it[HeartbeatTable.usedMemory],
-                                totalMemory = it[HeartbeatTable.totalMemory],
-                                freeDiskSpace = it[HeartbeatTable.freeDiskSpace],
-                                totalDiskSpace = it[HeartbeatTable.totalDiskSpace],
+                                activeConnections = it[HeartbeatTable.activeConnections] ?: 0,
+                                load = it[HeartbeatTable.cpuLoad] ?: 0.0,
+                                usedMemory = it[HeartbeatTable.usedMemory] ?: 0,
+                                totalMemory = it[HeartbeatTable.totalMemory] ?: 1,
+                                freeDiskSpace = it[HeartbeatTable.freeDiskSpace] ?: 0,
+                                totalDiskSpace = it[HeartbeatTable.totalDiskSpace] ?: 1,
                             )
                         }.toSet()
                 }

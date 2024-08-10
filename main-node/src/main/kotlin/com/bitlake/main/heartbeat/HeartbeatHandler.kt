@@ -66,12 +66,12 @@ object HeartbeatTable : Table(name = "heartbeat") {
     val port = text("port")
     val lastHb = timestamp("last_hb")
     val healthy = bool("healthy")
-    val activeConnections = integer(name = "active_connections")
-    val cpuLoad = double(name = "cpu_load")
-    val usedMemory = long("used_memory")
-    val totalMemory = long("total_memory")
-    val freeDiskSpace = long(name = "free_disk_space")
-    val totalDiskSpace = long(name = "total_disk_space")
+    val activeConnections = integer(name = "active_connections").nullable()
+    val cpuLoad = double(name = "cpu_load").nullable()
+    val usedMemory = long("used_memory").nullable()
+    val totalMemory = long("total_memory").nullable()
+    val freeDiskSpace = long(name = "free_disk_space").nullable()
+    val totalDiskSpace = long(name = "total_disk_space").nullable()
 
     override val primaryKey = PrimaryKey(host, port)
 }
