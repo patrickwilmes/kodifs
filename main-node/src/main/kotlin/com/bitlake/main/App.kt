@@ -32,10 +32,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.ktor.plugin.Koin
+import org.slf4j.LoggerFactory
 import java.util.UUID
 
 @OptIn(DelicateCoroutinesApi::class)
 private fun Application.createConsumerForTopic(consumer: Consumer): Job = GlobalScope.launch(Dispatchers.IO) {
+    val logger = LoggerFactory.getLogger("createConsumerForTopic")
     val client =
         pulsarClient((configValue(ConfigurationValue.PulsarUrl) as Value.StringValue).value)
 
@@ -54,7 +56,7 @@ private fun Application.createConsumerForTopic(consumer: Consumer): Job = Global
             }
         }
     } catch (e: Exception) {
-        e.printStackTrace()
+        logger.error("Failed to receive msg from consumer: ", e)
     } finally {
         pulsarConsumer.close()
         client.close()
